@@ -180,6 +180,17 @@
   <flags>
   </flags>
  </event>
+ <event name="Executioncomm_militia">
+  <lua>soromid/execution_comm</lua>
+  <trigger>enter</trigger>
+  <chance>2</chance>
+  <cond>player.misnDone("The Execution") == false and
+        player.misnActive("The Execution") == false and
+        player.misnDone("The Convoy")
+  </cond>
+  <flags>
+  </flags>
+ </event>
  <event name="Naev Needs You!">
   <lua>naev_needs_YOU</lua>
   <trigger>land</trigger>

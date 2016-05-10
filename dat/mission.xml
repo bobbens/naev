@@ -1314,4 +1314,74 @@
    <faction>Za'lek</faction>
   </avail>
  </mission>
+ <mission name="The Convoy">
+  <lua>soromid/militia/mil00_convoy</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.getRating() &gt; 50</cond>
+   <chance>55</chance>
+   <location>Bar</location>
+   <planet>Dono</planet>
+  </avail>
+ </mission>
+ <mission name="The Execution">
+  <lua>soromid/militia/mil01_execution</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="The Interception">
+  <lua>soromid/militia/mil02_interception</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Execution")</cond>
+   <chance>45</chance>
+   <location>Bar</location>
+   <planet>Dono</planet>
+  </avail>
+ </mission>
+ <mission name="False Banner Operation">
+  <lua>soromid/militia/mil03_banner</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Interception") and not var.peek("milDead")</cond>
+   <chance>45</chance>
+   <location>Bar</location>
+   <planet>Dono</planet>
+  </avail>
+ </mission>
+ <mission name="Hide and Seek">
+  <lua>soromid/militia/mil04_scout</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("False Banner Operation") and not var.peek("milDead")</cond>
+   <chance>45</chance>
+   <location>Bar</location>
+   <planet>Dono</planet>
+  </avail>
+ </mission>
+ <mission name="The Battle Of New Haven">
+  <lua>soromid/militia/mil05_battle</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Hide and Seek") and not var.peek("milDead")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Dono</planet>
+  </avail>
+ </mission>
 </Missions>

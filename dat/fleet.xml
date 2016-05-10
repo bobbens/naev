@@ -105,6 +105,27 @@
    <pilot name="Trader Quicksilver" ship="Quicksilver"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Militia Lancelot">
+  <ai>pirate</ai>
+  <faction>Militia</faction>
+  <pilots>
+   <pilot name="Militia Lancelot" ship="Lancelot"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Militia Ancestor">
+  <ai>pirate</ai>
+  <faction>Militia</faction>
+  <pilots>
+   <pilot name="Militia Ancestor" ship="Ancestor"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Militia Admonisher">
+  <ai>pirate</ai>
+  <faction>Militia</faction>
+  <pilots>
+   <pilot name="Militia Admonisher" ship="Admonisher"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Proteron Kahan">
   <ai>proteron</ai>
   <faction>Proteron</faction>
