@@ -18,35 +18,35 @@ if lang == "es" then
    osd_msg = {}
    
    title[1] = "Are you on the side of justice?"
-   text[1] = [[As you decide to answer the call, a smiling face appears on your viewscreen. "Hello, I'm the commander Jimmy Sun, retired pilot of the soromid army. I belive you are %s, right. You are the first pilot I know who managed to escort a Mule in the north of Alteris."]]
+   text[1] = [[As you decide to answer the call, a smiling face appears on your viewscreen. "Hello, I'm commander Jimmy Sun, retired pilot of the Soromid army. I believe you are %s, right? You are the first pilot I know who managed to escort a Mule to the north of Alteris."]]
 	
    refusetitle = "I can't do that"
    refusetext = [["Well, so I will look for someone else... Have a nice day anyway."]]
    
    title[2] = "A bug"
-   text[2] = [[You push the button to answer the call, but the equipment of the other pilot seems to be defective and the viewscreen becomes blue and you can read: "Someone is trying to call you". After a few seconds, the call ends and the pilot doesn't make any more attempts to communicate.]]
+   text[2] = [[You push the button to answer the call, but the equipment of the other pilot seems to be defective. As the viewscreen becomes blue, you can read: "Someone is trying to call you". After a few seconds, the call ends and the pilot doesn't make any more attempts to communicate.]]
    
    title[3] = "Are you on the side of justice?"
-   text[3] = [["Do you want to help the citizen of Dono, and all the traders who have hard time earning a living? Myself, and a few soromid trader and army pilots, are building an organization whose purpose is to fight piracy. I'd be very happy to see us in our ranks.
-The pirate Lord %s, who leads New Haven is convinced that he is the best fighter pilot in the universe. He challenges every pilot who wants it to a dogfight disable duel around his planet. My plan is to challenge and to kill him during a dogfight.
-Once he will be dead, the other pirates will fight against each other for supremacy and the honest citizen's life will be much better. Of course this operation is highly risky, and all of the members of my organization are volunteers, so you won't be paied. Are you still in?"]]
+   text[3] = [["Do you want to help the citizen of Dono, and all the traders who have hard time earning a living? Me, and a few Soromid trader and army pilots, are building an organization whose purpose is to fight piracy. I'd be very happy to see you in our ranks.
+The Pirate Lord %s, who leads New Haven is convinced that he is the best fighter pilot in the universe. He challenges every pilot who wants the title to a duel around his planet. My plan is to challenge and to kill him during the dogfight.
+Once he will be dead, the other pirates will fight against each other for supremacy and the honest citizen's life will be much better. Of course this operation is highly risky, and all of the members of my organization are volunteers, so you won't be paid. Are you still in?"]]
 
    title[4] = "Let's go"
-   text[4] = [["It seems you're a real though guy!" says Sun, "So, you now have to go to %s, land on %s (you may need to bribe them, but they are not really expensive), say to everybody in the bar that you are a better fighter pilot than their chief, and then kill him and report back to %s in %s. Good luck."]]
+   text[4] = [["It seems you're a real tough guy!", says Sun, "So, you now have to go to %s, land on %s, and pick a fight with %s. Good luck."]]
 	
    title[5] = "You ran away!"
    text[5] = [[Your mission failed.]]
 
    title[6] = "That was... Awesome!"
    text[6] = [[As you land, Jimmy Sun and a group of pilots is already waiting for you. "Oh man," he says, "You got him! That's wonderful. Now, everyone knows that being a pirate is way more dangerous than being an honest citizen."
-   Sun then turns solemnly to the other pilots and says: "Today, we obtained a great victory, but the fight is not over. I declare the etablishment of the Free Citizen's Militia, witch goal is to make the pirates of New Haven understand that they have nothing to do on our trade routes! %s, if you want to help us again, just come back, we will maybe have somethong for you."]]
+   Sun then turns solemnly to the other pilots and says: "Today, we obtained a great victory, but the fight is not over. I declare the establishment of the Free Citizen's Militia, whose goal is to make the pirates of New Haven understand that they have nothing to do on our trade routes! %s, if you want to help us again, just come back, we will maybe have something for you."]]
 	
    title[7] = "I want to fight!"
-   text[7] = [[You sit at the pirate's table and start yelling: "Hey, you, I've looked everywhere on this planet for a good fighter pilot, and I only saw weaklings. I'm sure, you are no exception! I'm starting to belive that everybody in New Haven is unable to shoot anything more than a trader' Llama. Actually, it's not surprising as your boss is %s. Any real pilot could disable this guy's ship eyes colsed!"
+   text[7] = [[You sit at the pirate's table and start yelling: "Hey, you, I've looked everywhere on this planet for a good fighter pilot, and I only saw weaklings. I'm sure, you are no exception! I'm starting to believe that everybody in New Haven is unable to shoot anything more than a trader Llama. Actually, it's not surprising as I heard %s can't even hit the broad side of a Mule!"
    The usual noise in the bar stop and the pirate says to you: "Looks like you are in trouble, %s will be informed that you want to fight with him, and he won't miss you, I can promise that!"]]
 
    title[8] = "You are so in trouble!"
-   text[8] = [["So I guess you know how it works: missiles are forbitten and you have to use only a fighter. There will be some pilots around you who ensure that you respect the rules. First, you join jour mark, and then, the fight begins. The first ship that is disabled (that means your ship) has lost. If you attack the boss before he joined his mark, we'll destroy you. Understood?"]]
+   text[8] = [["So I guess you know how it works: missiles are forbidden and you have to use only a fighter. There will be some pilots around you who ensure that you respect the rules. First, you join jour mark, and then, the fight begins. The first ship that is disabled (that means your ship) has lost. If you attack the boss before he joined his mark, we'll destroy you. Understood?"]]
 
    dismisstitle = "You are dismissed"
    missiletext = "You aren't allowed to use missiles"
@@ -102,7 +102,7 @@ function accept()
    safesys = "Wahri"
    missafe = planet.get(safename)
    syssafe = system.get(safesys)
-   tk.msg(title[4], text[4]:format(planame, sysname, safename, safesys))
+   tk.msg(title[4], text[4]:format(planame, sysname, safename, safesys, pirname))
 
    misn.accept()
    

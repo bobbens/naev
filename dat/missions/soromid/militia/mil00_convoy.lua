@@ -15,16 +15,16 @@ if lang == "es" then
    osd_msg = {}
    
    title[1] = "Looking for an escort"
-   text[1] = [[As you sit at her table, the woman starts to talk : "I'm an honest trader and I have an important delivery to %s. I don't have enough time to use the common trade route: I need to cross %s and %s. That's why I'm looking for a combat capable pilot to go with me. I can pay you %s credits. Are you going to do it ?"]]
+   text[1] = [[As you sit at her table, the woman starts to talk : "I'm an honest trader and I have an important delivery to %s. I don't have enough time to use the common trade route: I need to cross %s and %s. That's why I'm looking for a combat capable pilot to go with me. I can pay you %s credits. Are you interested?"]]
 	
    refusetitle = "No thank you"
-   refusetext = [["Ok, " she says, obviously disappointed, "I guess I have to look for someone else..."]]
+   refusetext = [["Ok", she says, obviously disappointed, "I guess I have to look for someone else..."]]
    
    title[2] = "Let's go"
-   text[2] = [["I knew, there were still people who don't fear the pirates!"]]
+   text[2] = [["I knew it, there were still people who don't fear the pirates!"]]
    
    title[3] = "That was a nice trip"
-   text[3] = [["We have done it, %s", says the merchant. "Take these credits as a reward. I'll tell people that there are still pilots who are courageous enough to stand up against the pirates." She hands you a credit chip and goes to the docks, where workers are already unloading her ship.]]
+   text[3] = [["We have done it, %s!", says the merchant. "Take these credits as a reward. I'll tell people that there are still pilots who are courageous enough to stand up against the pirates." She hands you a credit chip and goes to the docks, where workers are already unloading her ship.]]
 	
    title[4] = "You ran away!"
    title[5] = "The mule got destroyed"
