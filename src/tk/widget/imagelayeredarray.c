@@ -542,8 +542,8 @@ static void iar_cleanup( Widget* iar )
             free(iar->dat.iarl.alts[i]);
          if (iar->dat.iarl.quantity && iar->dat.iarl.quantity[i])
             free(iar->dat.iarl.quantity[i]);
-	    if (iar->dat.iarl.layers && iar->dat.iarl.layers[i])
-			free( iar->dat.iarl.layers[i] );
+         if (iar->dat.iarl.layers && iar->dat.iarl.layers[i])
+            free( iar->dat.iarl.layers[i] );
       }
    }
 
