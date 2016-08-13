@@ -2104,6 +2104,8 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
             xmlr_int(cur,"priority",temp->priority);
+            xmlr_int(cur,"level",temp->level);
+            xmlr_strd(cur,"logo",temp->logo);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
@@ -2215,9 +2217,71 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->type==0,"type");
    /*MELEMENT(temp->price==0,"price");*/
    MELEMENT(temp->description==NULL,"description");
+   //MELEMENT(temp->level==0,"level");
 #undef MELEMENT
 
    xmlFreeDoc(doc);
+
+   if (temp->gfx_store) {
+
+	   int nlayers=1;
+
+	   if (temp->slot.type != OUTFIT_SLOT_NA) {
+		   nlayers+=2;
+	   }
+
+	   if (temp->level > 0) {
+		   nlayers++;
+	   }
+
+	   if (temp->logo) {
+		   nlayers++;
+	   }
+
+	   int layerpos=0;
+
+	   temp->gfx_store_layers=malloc(sizeof(glTexture*)*nlayers);
+	   temp->gfx_store_layers[layerpos]=temp->gfx_store;
+	   layerpos++;
+	   if (temp->slot.type != OUTFIT_SLOT_NA) {
+		   if (temp->slot.spid>0) {
+			   nsnprintf( buf, bufsize, OUTFIT_GFX_PATH"store/layers/slot_special_%s.png",  sp_display(temp->slot.spid));
+			   temp->gfx_store_layers[layerpos]=gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+		   } else if (temp->slot.type == OUTFIT_SLOT_UTILITY) {
+			   temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_utility.png", OPENGL_TEX_MIPMAPS );
+		   } else if (temp->slot.type == OUTFIT_SLOT_STRUCTURE) {
+			   temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_structure.png", OPENGL_TEX_MIPMAPS );
+		   } else if (temp->slot.type == OUTFIT_SLOT_WEAPON) {
+			   temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_weapon.png", OPENGL_TEX_MIPMAPS );
+		   }
+
+		   layerpos++;
+
+		   if (temp->slot.size == OUTFIT_SLOT_SIZE_HEAVY)
+			   temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_heavy.png", OPENGL_TEX_MIPMAPS );
+		  else if (temp->slot.size == OUTFIT_SLOT_SIZE_MEDIUM)
+			  temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_medium.png", OPENGL_TEX_MIPMAPS );
+		  else if (temp->slot.size == OUTFIT_SLOT_SIZE_LIGHT)
+			  temp->gfx_store_layers[layerpos]=gl_newImage( OUTFIT_GFX_PATH"store/layers/slot_light.png", OPENGL_TEX_MIPMAPS );
+
+		   layerpos++;
+	   }
+
+	   if (temp->level > 0) {
+		   nsnprintf( buf, bufsize, OUTFIT_GFX_PATH"store/layers/level_%d.png", temp->level);
+		   temp->gfx_store_layers[layerpos]=gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+		   layerpos++;
+	   }
+
+	   if (temp->logo) {
+		   nsnprintf( buf, bufsize, OUTFIT_GFX_PATH"store/layers/logo_%s.png", temp->logo);
+		   temp->gfx_store_layers[layerpos]=gl_newImage( buf, OPENGL_TEX_MIPMAPS );
+		   layerpos++;
+	   }
+
+	   temp->gfx_store_nlayers=nlayers;
+   }
+
    free(buf);
 
    return 0;
@@ -2475,6 +2539,9 @@ void outfit_free (void)
          free( o->u.map );
       }
 
+      if (o->gfx_store_layers)
+          	  free(o->gfx_store_layers);
+
       /* strings */
       free(o->typename);
       free(o->description);
@@ -2484,6 +2551,8 @@ void outfit_free (void)
       free(o->name);
       if (o->gfx_store)
          gl_freeTexture(o->gfx_store);
+      if (o->logo)
+         free(o->logo);
    }
 
    array_free(outfit_stack);

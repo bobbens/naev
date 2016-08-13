@@ -9,6 +9,8 @@
   <description>A high-powered version of the Laser Cannon, the MK3 is usually found on Imperial law enforcement ships. Its superior firepower helps keep order among the civilian populace, though it has limited applications in full blown military engagements.</description>
   <gfx_store>laser2</gfx_store>
   <cpu>-7</cpu>
+  <level>3</level>
+  <logo>empire</logo>
   </general>
  <specific type="bolt">
   <gfx>laser3S</gfx>

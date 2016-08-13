@@ -337,7 +337,13 @@ typedef struct Outfit_ {
    char *desc_short; /**< Short outfit description. */
    int priority;     /**< Sort priority, highest first. */
 
+   int level;     /**< Item level, 1 to 5. Informative only. */
+
+   char *logo; /**< Logo to add to outfit pict (optional) */
+
    glTexture* gfx_store; /**< Store graphic. */
+   glTexture** gfx_store_layers; /**< Store graphic, with layers */
+   int gfx_store_nlayers; /**< Store graphic, layer number */
 
    unsigned int properties; /**< Properties stored bitwise. */
 

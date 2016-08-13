@@ -6,6 +6,8 @@
   <price>450000</price>
   <gfx_store>lancelot_empire_fighter</gfx_store>
   <description>This is an Imperial Lancelot class fighter adapted for usage in the Lancelot Fighter Bay. It contains all the features of the standalone Empire Lancelot with improved encrypted communication.</description>
+  <level>5</level>
+  <logo>empire</logo>
  </general>
  <specific type="fighter">
   <ship>Empire Lancelot</ship>

@@ -9,6 +9,7 @@
   <description>The mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
   <gfx_store>laser2</gfx_store>
   <cpu>-5</cpu>
+  <level>2</level>
   </general>
  <specific type="bolt">
   <gfx>laser2S</gfx>

@@ -9,6 +9,8 @@ libwidget_a_SOURCES = \
 	fader.c \
 	image.c \
 	imagearray.c \
+	imagelayered.c \
+	imagelayeredarray.c \
 	input.c \
 	list.c \
 	rect.c \
@@ -20,6 +22,8 @@ libwidget_a_SOURCES = \
 	fader.h \
 	image.h \
 	imagearray.h \
+	imagelayered.h \
+	imagelayeredarray.h \
 	input.h \
 	list.h \
 	rect.h \

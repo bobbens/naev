@@ -39,7 +39,9 @@ typedef enum WidgetType_ {
    WIDGET_IMAGEARRAY,
    WIDGET_FADER,
    WIDGET_TABBEDWINDOW,
-   WIDGET_CHECKBOX
+   WIDGET_CHECKBOX,
+   WIDGET_IMAGE_LAYERED,
+   WIDGET_IMAGELAYEREDARRAY
 } WidgetType;
 
 
@@ -119,11 +121,13 @@ typedef struct Widget_ {
       WidgetButtonData btn; /**< WIDGET_BUTTON */
       WidgetTextData txt; /**< WIDGET_TEXT */
       WidgetImageData img; /**< WIDGET_IMAGE */
+      WidgetImageLayeredData imgl; /**< WIDGET_IMAGE */
       WidgetListData lst; /**< WIDGET_LIST */
       WidgetRectData rct; /**< WIDGET_RECT */
       WidgetCustData cst; /**< WIDGET_CUST */
       WidgetInputData inp; /**< WIDGET_INPUT */
       WidgetImageArrayData iar; /**< WIDGET_IMAGEARRAY */
+      WidgetImageLayeredArrayData iarl; /**< WIDGET_IMAGELAYEREDARRAY */
       WidgetFaderData fad; /**< WIDGET_FADER */
       WidgetTabbedWindowData tab; /**< WIDGET_TABBEDWINDOW */
       WidgetCheckboxData chk; /**< WIDGET_CHECKBOX */

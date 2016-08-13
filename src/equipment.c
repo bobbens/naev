@@ -123,7 +123,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    int outfit_n;
    PilotOutfitSlot* slots;
    Pilot *p;
-   const char* clicked_outfit = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
+   const char* clicked_outfit = toolkit_getImageLayeredArray( wid, EQUIPMENT_OUTFITS );
 
    /* Did the user click on background? */
    if (clicked_outfit == NULL)
@@ -1203,7 +1203,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    /* Save positions. */
    if (outfits) {
       i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
-      toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
+      toolkit_saveImageLayeredArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
       window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    }
    if (ships) {
@@ -1220,8 +1220,8 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Restore positions. */
    if (outfits) {
-      toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
-      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+      toolkit_setImageLayeredArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
+      toolkit_setImageLayeredArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
       equipment_updateOutfits( wid, NULL );
    }
    if (ships) {
@@ -1473,7 +1473,8 @@ static void equipment_genOutfitList( unsigned int wid )
 
    int active, i, l, p, noutfits;
    char **soutfits, **alt, **quantity, **slottype;
-   glTexture **toutfits;
+   glTexture ***toutfits;
+   int *ntoutfits;
    Outfit *o, **outfits;
    const glColour *c;
    glColour *bg, blend;
@@ -1521,7 +1522,8 @@ static void equipment_genOutfitList( unsigned int wid )
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
    outfits  = calloc( noutfits, sizeof(Outfit*) );
    soutfits = calloc( noutfits, sizeof(char*) );
-   toutfits = calloc( noutfits, sizeof(glTexture*) );
+   toutfits = calloc( noutfits, sizeof(glTexture**) );
+   ntoutfits = calloc( noutfits, sizeof(int) );
 
    filtertext = NULL;
    if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
@@ -1531,13 +1533,14 @@ static void equipment_genOutfitList( unsigned int wid )
    }
 
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( outfits, toutfits,
+   noutfits = player_getOutfitsFiltered( outfits, toutfits, ntoutfits,
          tabfilters[active], filtertext );
 
    if (noutfits == 0) {
       noutfits = 1;
       soutfits[0] = strdup( "None" );
       toutfits[0] = NULL;
+      ntoutfits[0] = 0;
 
       /* Clean up. */
       free(outfits);
@@ -1547,9 +1550,9 @@ static void equipment_genOutfitList( unsigned int wid )
          soutfits[i] = strdup( outfits[i]->name );
 
    /* Create the actual image array. */
-   window_addImageArray( wid, x, y, ow, oh - 31,
+   window_addImageLayeredArray( wid, x, y, ow, oh - 31,
          EQUIPMENT_OUTFITS, 50., 50.,
-         toutfits, soutfits, noutfits,
+         toutfits, ntoutfits, soutfits, noutfits,
          equipment_updateOutfits,
          equipment_rightClickOutfits );
 
@@ -1614,10 +1617,10 @@ static void equipment_genOutfitList( unsigned int wid )
    free(outfits);
 
    /* Set misc stuff. */
-   toolkit_setImageArrayAlt( wid,         EQUIPMENT_OUTFITS, alt );
-   toolkit_setImageArrayQuantity( wid,    EQUIPMENT_OUTFITS, quantity );
-   toolkit_setImageArraySlotType( wid,    EQUIPMENT_OUTFITS, slottype );
-   toolkit_setImageArrayBackground( wid,  EQUIPMENT_OUTFITS, bg );
+   toolkit_setImageLayeredArrayAlt( wid,         EQUIPMENT_OUTFITS, alt );
+   toolkit_setImageLayeredArrayQuantity( wid,    EQUIPMENT_OUTFITS, quantity );
+   toolkit_setImageLayeredArraySlotType( wid,    EQUIPMENT_OUTFITS, slottype );
+   toolkit_setImageLayeredArrayBackground( wid,  EQUIPMENT_OUTFITS, bg );
 }
 
 
@@ -1776,7 +1779,7 @@ void equipment_updateOutfits( unsigned int wid, char* str )
    const char *oname;
 
    /* Must have outfit. */
-   oname = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
+   oname = toolkit_getImageLayeredArray( wid, EQUIPMENT_OUTFITS );
    if (strcmp(oname,"None")==0) {
       eq_wgt.outfit = NULL;
       return;
@@ -1810,7 +1813,7 @@ static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
    int pos;
    double offset;
 
-   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[old] );
+   toolkit_saveImageLayeredArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[old] );
 
    /* Store the currently-saved positions for the new tab. */
    pos    = iar_data[tab].pos;
@@ -1825,8 +1828,8 @@ static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
    /* Set positions for the new tab. This is necessary because the stored
     * position for the new tab may have exceeded the size of the old tab,
     * resulting in it being clipped. */
-   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, pos );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offset );
+   toolkit_setImageLayeredArrayPos(    wid, EQUIPMENT_OUTFITS, pos );
+   toolkit_setImageLayeredArrayOffset( wid, EQUIPMENT_OUTFITS, offset );
 
    /* Focus the outfit image array. */
    window_setFocus( wid, EQUIPMENT_OUTFITS );
@@ -1869,7 +1872,7 @@ static void equipment_changeShip( unsigned int wid )
 
    /* Store active tab, filter text, and positions for the outfits. */
    i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
-   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
+   toolkit_saveImageLayeredArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
    if (widget_exists(wid, EQUIPMENT_FILTER))
       filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
 
@@ -1885,8 +1888,8 @@ static void equipment_changeShip( unsigned int wid )
 
    /* Restore outfits image array properties. */
    window_tabWinSetActive( wid, EQUIPMENT_OUTFIT_TAB, i );
-   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
-   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+   toolkit_setImageLayeredArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
+   toolkit_setImageLayeredArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
    if (widget_exists(wid, EQUIPMENT_FILTER))
       window_setInput(wid, EQUIPMENT_FILTER, filtertext);
 

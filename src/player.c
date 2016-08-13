@@ -2457,8 +2457,8 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
  */
 const PlayerOutfit_t* player_getOutfits( int *n )
 {
-   *n = player_noutfits;
-   return (const PlayerOutfit_t*) player_outfits;
+	*n = player_noutfits;
+	return (const PlayerOutfit_t*) player_outfits;
 }
 
 
@@ -2471,22 +2471,22 @@ const PlayerOutfit_t* player_getOutfits( int *n )
  *    @param[in] name Name fragment that each outfit must contain.
  *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
-      int(*filter)( const Outfit *o ), char *name )
+int player_getOutfitsFiltered( Outfit **outfits, glTexture*** toutfits, int* ntoutfits,
+		int(*filter)( const Outfit *o ), char *name )
 {
-   int i;
+	int i;
 
-   if (player_noutfits == 0)
-      return 0;
+	if (player_noutfits == 0)
+		return 0;
 
-   /* We'll sort. */
-   qsort( player_outfits, player_noutfits,
-         sizeof(PlayerOutfit_t), player_outfitCompare );
+	/* We'll sort. */
+	qsort( player_outfits, player_noutfits,
+			sizeof(PlayerOutfit_t), player_outfitCompare );
 
-   for (i=0; i<player_noutfits; i++)
-      outfits[i] = (Outfit*)player_outfits[i].o;
+	for (i=0; i<player_noutfits; i++)
+		outfits[i] = (Outfit*)player_outfits[i].o;
 
-   return outfits_filter( outfits, toutfits, player_noutfits, filter, name );
+	return outfits_filter( outfits, toutfits, ntoutfits, player_noutfits, filter, name );
 }
 
 

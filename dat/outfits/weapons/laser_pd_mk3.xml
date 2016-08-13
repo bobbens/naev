@@ -9,6 +9,8 @@
   <description>While somewhat hard to come by due to Imperial export restrictions, the Laser Point Defense MK3 represents the pinnacle of light laser weapons technology.</description>
   <gfx_store>laserturret2</gfx_store>
   <cpu>-12</cpu>
+  <level>4</level>
+  <logo>empire</logo>
  </general>
  <specific type="turret bolt">
   <gfx>laser3S</gfx>
